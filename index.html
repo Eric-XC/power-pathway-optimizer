@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' http://localhost:*">
+  <title>Power Pathway Optimizer</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════
+     TITLE BAR
+═══════════════════════════════════════════════════════ -->
+<div id="titlebar">
+  <div class="tb-drag">
+    <div class="tb-brand">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="tb-logo">
+        <path d="M13 2L4 14h7l-2 8 11-12h-7l2-8z" fill="url(#lg1)"/>
+        <defs><linearGradient id="lg1" x1="0" y1="0" x2="24" y2="24">
+          <stop offset="0%" stop-color="#3b82f6"/><stop offset="100%" stop-color="#06b6d4"/>
+        </linearGradient></defs>
+      </svg>
+      <span class="tb-name">Power Pathway <strong>Optimizer</strong></span>
+    </div>
+    <div class="tb-project">
+      <span class="tb-dot"></span>
+      Briarwood Data Center · 100 MW · Austin, TX
+    </div>
+  </div>
+  <div class="tb-controls">
+    <button class="wc-btn" onclick="window.win?.minimize()" title="Minimize">&#8722;</button>
+    <button class="wc-btn" onclick="window.win?.maximize()" title="Maximize">&#9633;</button>
+    <button class="wc-btn wc-close" onclick="window.win?.close()" title="Close">&#215;</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     LAYOUT
+═══════════════════════════════════════════════════════ -->
+<div id="layout">
+
+  <!-- SIDEBAR -->
+  <aside id="sidebar">
+    <div class="sidebar-logo">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
+        <path d="M13 2L4 14h7l-2 8 11-12h-7l2-8z" fill="url(#slg)"/>
+        <defs><linearGradient id="slg" x1="0" y1="0" x2="24" y2="24">
+          <stop offset="0%" stop-color="#3b82f6"/><stop offset="100%" stop-color="#06b6d4"/>
+        </linearGradient></defs>
+      </svg>
+      <div>
+        <div class="sidebar-logo-title">POWER PATHWAY</div>
+        <div class="sidebar-logo-sub">OPTIMIZER</div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-group-label">ANALYSIS</div>
+
+      <a class="nav-link" data-view="overview" onclick="navigate('overview')">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+          <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+        </svg>
+        <span>Overview</span>
+        <span class="nav-badge">5</span>
+      </a>
+
+      <a class="nav-link active" data-view="configure" onclick="navigate('configure')">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <line x1="4" y1="6" x2="20" y2="6"/><circle cx="10" cy="6" r="2.5" fill="currentColor" stroke="none"/>
+          <line x1="4" y1="12" x2="20" y2="12"/><circle cx="16" cy="12" r="2.5" fill="currentColor" stroke="none"/>
+          <line x1="4" y1="18" x2="20" y2="18"/><circle cx="8" cy="18" r="2.5" fill="currentColor" stroke="none"/>
+        </svg>
+        <span>Configure</span>
+      </a>
+
+      <a class="nav-link" data-view="pathways" onclick="navigate('pathways')">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <polyline points="22 12 18 12 15 20 9 4 6 12 2 12"/>
+        </svg>
+        <span>Pathways</span>
+      </a>
+
+      <div class="nav-group-label">DEEP DIVE</div>
+
+      <a class="nav-link" data-view="timeline" onclick="navigate('timeline')">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/>
+          <line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+        </svg>
+        <span>Timeline</span>
+      </a>
+
+      <a class="nav-link" data-view="risk" onclick="navigate('risk')">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          <line x1="12" y1="8" x2="12" y2="12"/><circle cx="12" cy="16" r="1" fill="currentColor" stroke="none"/>
+        </svg>
+        <span>Risk Matrix</span>
+      </a>
+
+      <a class="nav-link" data-view="report" onclick="navigate('report')">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+        </svg>
+        <span>Report</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sf-status">
+        <span class="sf-dot"></span>
+        <span>Analysis Active</span>
+      </div>
+      <div class="sf-version">PPO v1.0.0 · Demo</div>
+    </div>
+  </aside>
+
+  <!-- CONTENT AREA -->
+  <main id="content">
+
+    <!-- ═══ VIEW: OVERVIEW ═══ -->
+    <section class="view" id="view-overview">
+      <div class="view-header">
+        <div class="view-title-group">
+          <h1>Overview</h1>
+          <p>Briarwood Data Center · Austin, TX · 300 MW load target · 5 strategies analyzed</p>
+        </div>
+        <div class="view-actions">
+          <span class="badge badge-success pulse">5 Strategies Ready</span>
+          <button class="btn btn-primary" onclick="navigate('configure')">
+            Reconfigure
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- KPI Grid -->
+      <div class="kpi-grid">
+        <div class="kpi-card" style="--accent:#3b82f6;--accent-rgb:59,130,246">
+          <div class="kpi-top">
+            <span class="kpi-label">Time to Full Power</span>
+            <div class="kpi-icon" style="background:rgba(59,130,246,0.15)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14h7l-2 8 11-12h-7l2-8z" fill="#3b82f6"/></svg>
+            </div>
+          </div>
+          <div class="kpi-value"><span class="counter" id="kpi-time" data-target="18">0</span> <span class="kpi-unit">months</span></div>
+          <div class="kpi-sub">
+            <span class="kpi-delta positive">▼ 18 mo vs grid-only</span>
+          </div>
+          <div class="kpi-progress"><div class="kpi-progress-fill" style="width:45%"></div></div>
+        </div>
+
+        <div class="kpi-card" style="--accent:#10b981;--accent-rgb:16,185,129">
+          <div class="kpi-top">
+            <span class="kpi-label">Optimal CAPEX</span>
+            <div class="kpi-icon" style="background:rgba(16,185,129,0.15)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+          </div>
+          <div class="kpi-value">$<span class="counter" id="kpi-capex" data-target="87">0</span> <span class="kpi-unit">million</span></div>
+          <div class="kpi-sub">
+            <span class="kpi-delta positive">▼ $38M vs full on-site gas</span>
+          </div>
+          <div class="kpi-progress"><div class="kpi-progress-fill" style="width:58%"></div></div>
+        </div>
+
+        <div class="kpi-card" style="--accent:#8b5cf6;--accent-rgb:139,92,246">
+          <div class="kpi-top">
+            <span class="kpi-label">Carbon Intensity</span>
+            <div class="kpi-icon" style="background:rgba(139,92,246,0.15)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2"><path d="M17 8C8 10 5.9 16.17 3.82 20.9"/><path d="M10 8c3.93-1.35 5.9-.4 8.1 1.2"/><path d="M13 16c3.48.88 5.5 2.92 6 5"/></svg>
+            </div>
+          </div>
+          <div class="kpi-value"><span class="counter-dec" id="kpi-carbon" data-target="0.38">0.00</span> <span class="kpi-unit">tCO₂/MWh</span></div>
+          <div class="kpi-sub">
+            <span class="kpi-delta positive">▼ 5% under cap</span>
+          </div>
+          <div class="kpi-progress"><div class="kpi-progress-fill" style="width:38%"></div></div>
+        </div>
+
+        <div class="kpi-card" style="--accent:#f97316;--accent-rgb:249,115,22">
+          <div class="kpi-top">
+            <span class="kpi-label">Resilience Score</span>
+            <div class="kpi-icon" style="background:rgba(249,115,22,0.15)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+          </div>
+          <div class="kpi-value"><span class="counter" id="kpi-resilience" data-target="88">0</span><span class="kpi-unit">%</span></div>
+          <div class="kpi-sub">
+            <span class="kpi-delta positive">▲ Excellent rating</span>
+          </div>
+          <div class="kpi-progress"><div class="kpi-progress-fill" style="width:88%"></div></div>
+        </div>
+      </div>
+
+      <!-- Charts Row -->
+      <div class="charts-row">
+        <div class="card chart-card" style="flex:2">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Strategy Comparison</div>
+              <div class="card-sub">Composite score breakdown by priority — longer bar = better overall fit</div>
+            </div>
+            <div class="pareto-legend" id="pareto-legend-ov"></div>
+          </div>
+          <div class="chart-wrap" style="height:280px"><canvas id="chart-pareto-ov"></canvas></div>
+        </div>
+        <div class="card chart-card" style="flex:1">
+          <div class="card-header">
+            <div>
+              <div class="card-title">10-Year Cash Flow</div>
+              <div class="card-sub">Cumulative NPV projection</div>
+            </div>
+          </div>
+          <div class="chart-wrap" style="height:280px"><canvas id="chart-cashflow"></canvas></div>
+        </div>
+      </div>
+
+      <!-- Strategy Table -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Strategy Comparison</div>
+            <div class="card-sub">All viable pathways ranked by weighted score</div>
+          </div>
+          <button class="btn btn-ghost btn-sm" onclick="navigate('pathways')">Full Analysis →</button>
+        </div>
+        <div id="strategy-table"></div>
+      </div>
+    </section>
+
+    <!-- ═══ VIEW: CONFIGURE ═══ -->
+    <section class="view active" id="view-configure">
+      <div class="view-header">
+        <div class="view-title-group">
+          <h1>Configure Scenario</h1>
+          <p>Define the power gap problem, constraints, and optimization priorities</p>
+        </div>
+        <div class="view-actions">
+          <button class="btn btn-ghost" onclick="resetDefaults()">Reset Defaults</button>
+          <button class="btn btn-primary" id="btn-optimize" onclick="runOptimization()">
+            <span id="optimize-text">Run Optimization</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Hidden inputs kept for scoring engine compatibility -->
+      <input type="hidden" id="cfg-wmin" value="24">
+      <input type="hidden" id="cfg-wmax" value="48">
+
+      <div class="cfg-grid">
+        <!-- LEFT COL -->
+        <div class="cfg-col">
+
+          <!-- 1. Project Information -->
+          <div class="card">
+            <div class="card-header-s"><h3>Project Information</h3></div>
+            <div class="form-grid">
+              <div class="fg">
+                <label>Project Name</label>
+                <input type="text" id="cfg-name" value="Briarwood Data Center" class="fi">
+              </div>
+              <div class="fg">
+                <label>Location</label>
+                <input type="text" id="cfg-location" value="Austin, TX" class="fi">
+              </div>
+              <div class="fg full">
+                <label>Load Target <span class="fv" id="dv-load">300 MW</span></label>
+                <input type="range" id="cfg-load" min="10" max="500" value="300" step="10" class="fr" oninput="dv('dv-load',this.value+' MW');renderPhaseTable()">
+                <div class="range-labels"><span>10 MW</span><span>500 MW</span></div>
+              </div>
+              <div class="fg">
+                <label>Facility Type</label>
+                <select id="cfg-type" class="fs">
+                  <option value="dc">Data Center</option>
+                  <option value="ind">Industrial Facility</option>
+                  <option value="ev">EV Charging Hub</option>
+                  <option value="mfg">Manufacturing Campus</option>
+                </select>
+              </div>
+              <div class="fg">
+                <label>Target Online Date</label>
+                <input type="text" id="cfg-date" value="Q1 2027" class="fi">
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Load Ramp -->
+          <div class="card">
+            <div class="card-header-s">
+              <h3>Load Ramp (Demand Over Time)</h3>
+              <span style="font-size:11px;color:var(--text-s)">Last phase = 100%</span>
+            </div>
+            <div style="padding:14px 20px 18px">
+              <div style="font-size:11px;color:var(--text-s);margin-bottom:12px;line-height:1.5">
+                Define how load ramps up to the target. Months are from project start.
+              </div>
+              <table class="phase-tbl">
+                <thead>
+                  <tr>
+                    <th>Phase Name</th>
+                    <th>Month Online</th>
+                    <th>Load (% of target)</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="phase-tbody"></tbody>
+              </table>
+              <div id="phase-error" class="phase-error" style="display:none"></div>
+              <button class="btn btn-ghost btn-sm" id="btn-add-phase" onclick="addPhaseRow()" style="margin-top:10px">+ Add Phase</button>
+            </div>
+          </div>
+
+          <!-- 3. Grid Interconnection -->
+          <div class="card">
+            <div class="card-header-s">
+              <h3>Grid Interconnection</h3>
+              <span class="badge badge-warning" id="queue-badge">47th in Queue</span>
+            </div>
+            <div class="form-grid">
+              <div class="fg full">
+                <label>Queue Position (1–100)</label>
+                <div class="queue-bar-wrap">
+                  <div class="queue-bar-track">
+                    <div class="queue-bar-fill" id="queue-bar-fill" style="width:47%"></div>
+                    <div class="queue-marker" id="queue-marker" style="left:47%">47</div>
+                  </div>
+                  <input type="range" id="cfg-queue" min="1" max="100" value="47" step="1" class="fr" style="margin-top:14px" oninput="updateQueueDisplay(+this.value)">
+                  <div class="range-labels"><span>1st (head)</span><span>100th (tail)</span></div>
+                </div>
+              </div>
+              <div class="fg full">
+                <div class="wait-range-display">
+                  <div class="wrd-row">
+                    <span class="wrd-label">Estimated wait to firm power</span>
+                    <span class="wrd-value" id="wrd-range">24 – 36 months</span>
+                  </div>
+                  <div class="wrd-row">
+                    <span class="wrd-label">Firm power ready (from today)</span>
+                    <span class="wrd-value wrd-accent" id="wrd-ready">—</span>
+                  </div>
+                </div>
+              </div>
+              <div class="fg full">
+                <label>Utility Delivery Capacity (MW) <span class="fv" id="dv-utcap">200 MW</span></label>
+                <input type="range" id="cfg-utcap" min="0" max="500" value="200" step="10" class="fr"
+                       oninput="dv('dv-utcap',this.value+' MW')">
+                <div class="range-labels"><span>0 MW (no utility)</span><span>500 MW (full)</span></div>
+                <div style="font-size:10px;color:var(--text-s);margin-top:4px">
+                  Max power the grid can deliver when interconnection is complete. Gap = Load − Utility cap.
+                </div>
+              </div>
+
+              <div class="fg full">
+                <div class="adv-header" onclick="toggleAdv('adv-grid')">
+                  <span>Advanced</span><span id="adv-grid-icon">▼</span>
+                </div>
+                <div class="adv-body" id="adv-grid" style="display:none">
+                  <div class="form-grid" style="padding:12px 0 0">
+                    <div class="fg full">
+                      <label>Timeline Confidence <span class="fv" id="dv-conf">65%</span></label>
+                      <input type="range" id="cfg-conf" min="10" max="95" value="65" step="5" class="fr" oninput="dv('dv-conf',this.value+'%')">
+                    </div>
+                    <div class="fg full">
+                      <label>Utility Grid Upgrade Cost <span class="fv" id="dv-gcost">$12M</span></label>
+                      <input type="range" id="cfg-gcost" min="2" max="60" value="12" step="2" class="fr" oninput="dv('dv-gcost','$'+this.value+'M')">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. On-Site Generation -->
+          <div class="card">
+            <div class="card-header-s">
+              <h3>On-Site Generation Options</h3>
+              <span style="font-size:11px;color:var(--text-s)">Optimizer sizes capacity automatically</span>
+            </div>
+            <div class="gen-opts">
+
+              <div class="gen-opt">
+                <div class="gen-opt-hdr">
+                  <label class="toggle-wrap"><input type="checkbox" id="opt-sofc" checked><span class="toggle"></span></label>
+                  <span style="font-size:18px;line-height:1">⚗</span>
+                  <span class="gen-name">Fuel Cell (SOFC)</span>
+                  <span class="badge" style="background:rgba(59,130,246,0.2);color:#3b82f6">Fast · Clean</span>
+                </div>
+                <div class="gen-params">Deploy: 3–6 mo &nbsp;·&nbsp; $3,000/kW &nbsp;·&nbsp; 470 kg CO₂/MWh &nbsp;·&nbsp; 92% CF &nbsp;·&nbsp; LCOE $110/MWh</div>
+              </div>
+
+              <div class="gen-opt">
+                <div class="gen-opt-hdr">
+                  <label class="toggle-wrap"><input type="checkbox" id="opt-solar" checked><span class="toggle"></span></label>
+                  <span style="font-size:18px;line-height:1">☀</span>
+                  <span class="gen-name">Solar + BESS (12h)</span>
+                  <span class="badge" style="background:rgba(16,185,129,0.2);color:#10b981">Low Carbon</span>
+                </div>
+                <div class="gen-params">Deploy: 6–18 mo &nbsp;·&nbsp; $2,400/kW &nbsp;·&nbsp; 40 kg CO₂/MWh &nbsp;·&nbsp; 20% CF &nbsp;·&nbsp; LCOE $60/MWh</div>
+              </div>
+
+              <div class="gen-opt">
+                <div class="gen-opt-hdr">
+                  <label class="toggle-wrap"><input type="checkbox" id="opt-gas" checked><span class="toggle"></span></label>
+                  <span style="font-size:18px;line-height:1">🔥</span>
+                  <span class="gen-name">Gas Turbine (SC)</span>
+                  <span class="badge" style="background:rgba(249,115,22,0.2);color:#f97316">High Power</span>
+                </div>
+                <div class="gen-params">Deploy: 12–24 mo &nbsp;·&nbsp; $1,600/kW &nbsp;·&nbsp; 600 kg CO₂/MWh &nbsp;·&nbsp; 75% CF &nbsp;·&nbsp; LCOE $95/MWh</div>
+              </div>
+
+              <div class="gen-opt">
+                <div class="gen-opt-hdr">
+                  <label class="toggle-wrap"><input type="checkbox" id="opt-diesel" checked><span class="toggle"></span></label>
+                  <span style="font-size:18px;line-height:1">⛽</span>
+                  <span class="gen-name">Diesel Generator</span>
+                  <span class="badge" style="background:rgba(239,68,68,0.2);color:#ef4444">Fastest Deploy</span>
+                </div>
+                <div class="gen-params">Deploy: 1–6 mo &nbsp;·&nbsp; $900/kW &nbsp;·&nbsp; 790 kg CO₂/MWh &nbsp;·&nbsp; 80% CF &nbsp;·&nbsp; LCOE $160/MWh</div>
+              </div>
+
+              <div class="gen-opt">
+                <div class="gen-opt-hdr">
+                  <label class="toggle-wrap"><input type="checkbox" id="opt-wind" checked><span class="toggle"></span></label>
+                  <span style="font-size:18px;line-height:1">💨</span>
+                  <span class="gen-name">Wind + BESS</span>
+                  <span class="badge" style="background:rgba(6,182,212,0.2);color:#06b6d4">Zero Carbon</span>
+                </div>
+                <div class="gen-params">Deploy: 12–36 mo &nbsp;·&nbsp; $1,700/kW &nbsp;·&nbsp; 10 kg CO₂/MWh &nbsp;·&nbsp; 36% CF &nbsp;·&nbsp; LCOE $80/MWh</div>
+              </div>
+
+              <div class="gen-opt">
+                <div class="gen-opt-hdr">
+                  <label class="toggle-wrap"><input type="checkbox" id="opt-smr"><span class="toggle"></span></label>
+                  <span style="font-size:18px;line-height:1">⚛</span>
+                  <span class="gen-name">SMR</span>
+                  <span class="badge" style="background:rgba(139,92,246,0.2);color:#8b5cf6">Long-term</span>
+                </div>
+                <div class="gen-params">Deploy: 60–120 mo &nbsp;·&nbsp; $5,600/kW &nbsp;·&nbsp; 12 kg CO₂/MWh &nbsp;·&nbsp; 94% CF &nbsp;·&nbsp; LCOE $95/MWh</div>
+              </div>
+
+              <div class="gen-opt">
+                <div class="gen-opt-hdr">
+                  <label class="toggle-wrap"><input type="checkbox" id="opt-geo"><span class="toggle"></span></label>
+                  <span style="font-size:18px;line-height:1">🌋</span>
+                  <span class="gen-name">Geothermal</span>
+                  <span class="badge" style="background:rgba(132,204,22,0.15);color:#84cc16">Long-term</span>
+                </div>
+                <div class="gen-params">Deploy: 60–100 mo &nbsp;·&nbsp; $2,300/kW &nbsp;·&nbsp; 35 kg CO₂/MWh &nbsp;·&nbsp; 81% CF &nbsp;·&nbsp; LCOE $90/MWh</div>
+              </div>
+
+              <div class="gen-opt gen-opt-display">
+                <div class="gen-opt-hdr">
+                  <span style="font-size:18px;line-height:1">🔧</span>
+                  <span class="gen-name">Portable Xfmr + Utility</span>
+                  <span class="badge" style="background:rgba(167,139,250,0.15);color:#a78bfa">Display only</span>
+                </div>
+                <div class="gen-params">Enables early utility delivery · fixed capacity cap · non-scalable &nbsp;·&nbsp; $0.35/MWh &nbsp;·&nbsp; 332 kg CO₂/MWh</div>
+              </div>
+
+              <div class="gen-opt gen-opt-display">
+                <div class="gen-opt-hdr">
+                  <span style="font-size:18px;line-height:1">🔌</span>
+                  <span class="gen-name">Utility Power (TX)</span>
+                  <span class="badge" style="background:rgba(14,165,233,0.15);color:#0ea5e9">Display only</span>
+                </div>
+                <div class="gen-params">Grid interconnection · 24–120 mo queue &nbsp;·&nbsp; $0.35/MWh &nbsp;·&nbsp; 332 kg CO₂/MWh &nbsp;·&nbsp; 99% CF</div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT COL -->
+        <div class="cfg-col">
+
+          <!-- 6. Environmental -->
+          <div class="card">
+            <div class="card-header-s"><h3>Environmental Constraints</h3></div>
+            <div class="form-grid">
+              <div class="fg full">
+                <label>Max Emissions Cap <span class="fv" id="dv-em">0.40 tCO₂/MWh</span></label>
+                <input type="range" id="cfg-em" min="5" max="80" value="40" step="5" class="fr green" oninput="dv('dv-em',(this.value/100).toFixed(2)+' tCO₂/MWh')">
+                <div class="range-labels"><span>0.05 (very clean)</span><span>0.80 (unconstrained)</span></div>
+              </div>
+              <div class="fg full">
+                <label>Carbon Price <span class="fv" id="dv-cp">$35/ton</span></label>
+                <input type="range" id="cfg-cp" min="0" max="200" value="35" step="5" class="fr" oninput="dv('dv-cp','$'+this.value+'/ton')">
+              </div>
+              <div class="fg full">
+                <div class="adv-header" onclick="toggleAdv('adv-env')">
+                  <span>Advanced</span><span id="adv-env-icon">▼</span>
+                </div>
+                <div class="adv-body" id="adv-env" style="display:none">
+                  <div class="form-grid" style="padding:12px 0 0">
+                    <div class="fg">
+                      <label>NOx Limit <span class="fv" id="dv-nox">25 ppm</span></label>
+                      <input type="range" id="cfg-nox" min="5" max="50" value="25" step="5" class="fr" oninput="dv('dv-nox',this.value+' ppm')">
+                    </div>
+                    <div class="fg">
+                      <label>Carbon Reduction Target <span class="fv" id="dv-red">30%</span></label>
+                      <input type="range" id="cfg-red" min="0" max="100" value="30" step="5" class="fr green" oninput="dv('dv-red',this.value+'%')">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 7. Optimization Priorities -->
+          <div class="card">
+            <div class="card-header-s">
+              <h3>Optimization Priorities</h3>
+              <span style="font-size:11px;color:var(--text-s)">Weights auto-normalized</span>
+            </div>
+            <!-- Developer Profile Presets -->
+            <div class="preset-btns">
+              <button class="preset-btn" onclick="applyPreset('fast',this)">⚡ Fast to Market</button>
+              <button class="preset-btn" onclick="applyPreset('cost',this)">💰 Cost Effective</button>
+              <button class="preset-btn" onclick="applyPreset('green',this)">🌿 Green</button>
+              <button class="preset-btn" onclick="applyPreset('uptime',this)">🛡 High Uptime</button>
+            </div>
+            <div class="weights-list">
+              <div class="weight-row">
+                <div class="weight-hdr">
+                  <div class="weight-dot" style="background:#3b82f6"></div>
+                  <span>Speed to Market</span>
+                  <span class="weight-val" id="wv-time">35%</span>
+                </div>
+                <input type="range" id="w-time" min="0" max="100" value="35" class="fr" oninput="updateWeights()">
+              </div>
+              <div class="weight-row">
+                <div class="weight-hdr">
+                  <div class="weight-dot" style="background:#10b981"></div>
+                  <span>Total Cost</span>
+                  <span class="weight-val" id="wv-cost">30%</span>
+                </div>
+                <input type="range" id="w-cost" min="0" max="100" value="30" class="fr" oninput="updateWeights()">
+              </div>
+              <div class="weight-row">
+                <div class="weight-hdr">
+                  <div class="weight-dot" style="background:#8b5cf6"></div>
+                  <span>Environmental</span>
+                  <span class="weight-val" id="wv-carbon">20%</span>
+                </div>
+                <input type="range" id="w-carbon" min="0" max="100" value="20" class="fr" oninput="updateWeights()">
+              </div>
+              <div class="weight-row">
+                <div class="weight-hdr">
+                  <div class="weight-dot" style="background:#f97316"></div>
+                  <span>Resilience</span>
+                  <span class="weight-val" id="wv-res">15%</span>
+                </div>
+                <input type="range" id="w-res" min="0" max="100" value="15" class="fr" oninput="updateWeights()">
+              </div>
+            </div>
+            <div class="weights-bar" id="weights-bar">
+              <div style="width:35%;background:#3b82f6"></div>
+              <div style="width:30%;background:#10b981"></div>
+              <div style="width:20%;background:#8b5cf6"></div>
+              <div style="width:15%;background:#f97316"></div>
+            </div>
+            <div class="weights-sum">Weights sum to 100%</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Assumptions panel — full width, collapsed by default -->
+      <div class="card assumptions-panel">
+        <div class="adv-header" onclick="toggleAdv('adv-assumptions')" style="padding:14px 20px;border:none;background:none;border-radius:0">
+          <span style="font-size:13px;font-weight:600;color:var(--text)">📋 Assumptions (Concept-level)</span>
+          <span id="adv-assumptions-icon">▼</span>
+        </div>
+        <div class="adv-body" id="adv-assumptions" style="display:none;padding:0 20px 20px">
+          <div class="assumptions-grid">
+            <div class="assumption-item"><span class="assumption-key">Solar capacity factor</span><span class="assumption-val">0.22 (22%)</span></div>
+            <div class="assumption-item"><span class="assumption-key">Gas turbine heat rate</span><span class="assumption-val">8,500 BTU/kWh</span></div>
+            <div class="assumption-item"><span class="assumption-key">Gas emissions factor</span><span class="assumption-val">0.18 tCO₂/MWh</span></div>
+            <div class="assumption-item"><span class="assumption-key">Grid emissions (ERCOT avg)</span><span class="assumption-val">0.35 tCO₂/MWh</span></div>
+            <div class="assumption-item"><span class="assumption-key">BESS round-trip efficiency</span><span class="assumption-val">0.90 (90%)</span></div>
+            <div class="assumption-item"><span class="assumption-key">Diesel generator emissions</span><span class="assumption-val">0.67 tCO₂/MWh</span></div>
+          </div>
+          <div class="assumption-disclaimer">
+            ⚠ Concept-level, order-of-magnitude estimates only. All figures are illustrative placeholders. Detailed engineering, financial, and regulatory models should be integrated before investment decisions.
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ═══ VIEW: PATHWAYS ═══ -->
+    <section class="view" id="view-pathways">
+      <div class="view-header">
+        <div class="view-title-group">
+          <h1>Pathway Analysis</h1>
+          <p>Ranked strategies by weighted score — each bar shows how a portfolio performs across your priorities</p>
+        </div>
+        <div class="view-actions">
+          <button class="btn btn-ghost" onclick="navigate('timeline')">Timeline →</button>
+          <button class="btn btn-primary" onclick="navigate('report')">Generate Report →</button>
+        </div>
+      </div>
+
+      <!-- Optimizer results — populated by renderRankingResults() (includes bar chart canvas) -->
+      <div id="ranking-results"></div>
+
+      <!-- Pathway Over Time table — populated by renderPathwayTable() -->
+      <div id="pathway-table-container"></div>
+
+      <div class="strategy-cards" id="strategy-cards"></div>
+    </section>
+
+    <!-- ═══ VIEW: TIMELINE ═══ -->
+    <section class="view" id="view-timeline">
+      <div class="view-header">
+        <div class="view-title-group">
+          <h1>Deployment Timeline</h1>
+          <p>Phased asset lifecycle, decision gates, and key milestones</p>
+        </div>
+        <div class="view-actions">
+          <select id="tl-select" class="fs" onchange="renderTimeline(this.value)">
+            <option value="hybrid-phased">Hybrid Phased (Recommended)</option>
+            <option value="grid-first">Grid-First Strategy</option>
+            <option value="full-onsite-gas">Full On-Site Gas</option>
+            <option value="gas-bess-bridge">Gas-BESS Bridge</option>
+            <option value="renewable-bridge">Renewable Bridge</option>
+          </select>
+        </div>
+      </div>
+      <div id="timeline-container"></div>
+    </section>
+
+    <!-- ═══ VIEW: RISK ═══ -->
+    <section class="view" id="view-risk">
+      <div class="view-header">
+        <div class="view-title-group">
+          <h1>Risk Assessment</h1>
+          <p>Regulatory, environmental, and execution risk analysis</p>
+        </div>
+        <div class="view-actions">
+          <select id="risk-select" class="fs" onchange="renderRisk(this.value)">
+            <option value="hybrid-phased">Hybrid Phased (Recommended)</option>
+            <option value="grid-first">Grid-First Strategy</option>
+            <option value="full-onsite-gas">Full On-Site Gas</option>
+            <option value="gas-bess-bridge">Gas-BESS Bridge</option>
+            <option value="renewable-bridge">Renewable Bridge</option>
+          </select>
+        </div>
+      </div>
+      <div class="risk-layout">
+        <div class="card risk-matrix-card">
+          <div class="card-header-s"><h3>Risk Heat Map</h3></div>
+          <div id="risk-matrix"></div>
+          <div class="risk-legend">
+            <span class="rl-item"><span class="rl-dot" style="background:#10b981"></span>Low</span>
+            <span class="rl-item"><span class="rl-dot" style="background:#f59e0b"></span>Medium</span>
+            <span class="rl-item"><span class="rl-dot" style="background:#f97316"></span>High</span>
+            <span class="rl-item"><span class="rl-dot" style="background:#ef4444"></span>Critical</span>
+          </div>
+        </div>
+        <div class="card risk-list-card">
+          <div class="card-header-s"><h3>Risk Register</h3></div>
+          <div id="risk-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ VIEW: REPORT ═══ -->
+    <section class="view" id="view-report">
+      <div class="view-header">
+        <div class="view-title-group">
+          <h1>Decision Report</h1>
+          <p>Executive summary — Hybrid Phased Strategy recommended</p>
+        </div>
+        <div class="view-actions">
+          <button class="btn btn-ghost" onclick="showToast('PDF export simulated — would generate 24-page report')">Export PDF</button>
+          <button class="btn btn-ghost" onclick="showToast('Excel workbook exported with 8 scenario sheets')">Export Excel</button>
+          <button class="btn btn-primary" onclick="showToast('Summary copied to clipboard')">Copy Summary</button>
+        </div>
+      </div>
+      <div id="report-content"></div>
+    </section>
+
+  </main>
+</div>
+
+<!-- Toast notification -->
+<div id="toast"></div>
+
+<!-- Optimization progress modal -->
+<div id="opt-modal" class="modal-overlay" style="display:none">
+  <div class="modal-box">
+    <div class="modal-icon">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14h7l-2 8 11-12h-7l2-8z" fill="url(#mlg)"/><defs><linearGradient id="mlg" x1="0" y1="0" x2="24" y2="24"><stop offset="0%" stop-color="#3b82f6"/><stop offset="100%" stop-color="#06b6d4"/></linearGradient></defs></svg>
+    </div>
+    <h3>Running Optimization</h3>
+    <p>Evaluating pathways across time, cost, carbon, and resilience dimensions...</p>
+    <div class="opt-progress">
+      <div class="opt-bar" id="opt-bar"></div>
+    </div>
+    <div class="opt-steps" id="opt-steps">
+      <div class="opt-step active">Generating scenario permutations...</div>
+    </div>
+  </div>
+</div>
+
+<script src="../node_modules/chart.js/dist/chart.umd.min.js"></script>
+<script src="scoringMatrix.js"></script>
+<script src="optimizer.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
