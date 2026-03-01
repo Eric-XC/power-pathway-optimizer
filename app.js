@@ -1950,20 +1950,25 @@ function runOptimization() {
       setTimeout(() => {
         modal.style.display = 'none';
         if (btn) { btn.disabled = false; document.getElementById('optimize-text').textContent = 'Run Optimization'; }
-        // Legacy strategy scoring (Overview, Timeline, Risk Matrix)
-        recalculateAllStrategies(readParams(), readWeights());
-        state.optimized = true;
-        updateKPITargets();
-        // Relative ranking (Technology Comparison view)
-        const rw = readRankingWeights();
-        state.lastRankingWeights = rw;
-        state.rankingResults     = rankTechnologies(rw);
-        // Real optimizer: absolute values, C1/C3/C4/C5/C6 constraints
-        const params = readParams();
-        state.lastParams      = params;
-        state.optimizerResult = optimize(params, rw);
-        showToast('Optimization complete — ' + (state.optimizerResult.ranked.length) + ' feasible portfolios ranked.');
-        navigate('pathways');
+        try {
+          // Legacy strategy scoring (Overview, Timeline, Risk Matrix)
+          recalculateAllStrategies(readParams(), readWeights());
+          state.optimized = true;
+          updateKPITargets();
+          // Relative ranking (Technology Comparison view)
+          const rw = readRankingWeights();
+          state.lastRankingWeights = rw;
+          state.rankingResults     = rankTechnologies(rw);
+          // Real optimizer: absolute values, C1/C3/C4/C5/C6 constraints
+          const params = readParams();
+          state.lastParams      = params;
+          state.optimizerResult = optimize(params, rw);
+          showToast('Optimization complete — ' + (state.optimizerResult.ranked.length) + ' feasible portfolios ranked.');
+          navigate('pathways');
+        } catch (err) {
+          alert('Optimizer error: ' + err.message + '\n\nCheck browser console (F12) for details.');
+          console.error('Optimizer error:', err);
+        }
       }, 700);
     }
   }, 500);
