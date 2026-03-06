@@ -1,0 +1,19 @@
+{
+  "_description": "Green priority: strict carbon cap (0.05 kg/kWh), large budget, long grid wait (60-84 months). Tests C3 + C1 interaction.",
+  "loadMW": 50,
+  "loadRampPhases": [
+    {"month": 12, "pct": 40},
+    {"month": 36, "pct": 100}
+  ],
+  "gridWaitMin": 60,
+  "gridWaitMax": 84,
+  "enabledTechs": ["fuelCell_SOFC", "solar_bess", "wind_bess", "geothermal", "smr"],
+  "carbonCapKgPerKwh": 0.05,
+  "budgetM": 1000,
+  "weights": {
+    "speedToMarket": 0.10,
+    "cost": 0.20,
+    "environmental": 0.50,
+    "resilience": 0.20
+  }
+}

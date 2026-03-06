@@ -1,0 +1,20 @@
+{
+  "_description": "Baseline: 100 MW data center, 36-54 month grid wait, moderate budget, balanced weights",
+  "loadMW": 100,
+  "loadRampPhases": [
+    {"month": 6,  "pct": 25},
+    {"month": 18, "pct": 60},
+    {"month": 36, "pct": 100}
+  ],
+  "gridWaitMin": 36,
+  "gridWaitMax": 54,
+  "enabledTechs": ["fuelCell_SOFC", "solar_bess", "diesel_generator", "gas_turbine", "wind_bess"],
+  "carbonCapKgPerKwh": 0.6,
+  "budgetM": 500,
+  "weights": {
+    "speedToMarket": 0.35,
+    "cost": 0.25,
+    "environmental": 0.20,
+    "resilience": 0.20
+  }
+}
